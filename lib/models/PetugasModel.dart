@@ -1,6 +1,6 @@
 class PetugasModel {
   int? idPetugas;
-  String? namaPetugas;
+  String? nama_petugas;
   String? username;
   String? password;
   String? telp;
@@ -10,7 +10,7 @@ class PetugasModel {
 
   PetugasModel(
       {this.idPetugas,
-      this.namaPetugas,
+      this.nama_petugas,
       this.username,
       this.password,
       this.telp,
@@ -20,7 +20,7 @@ class PetugasModel {
 
   PetugasModel.fromJson(Map<String, dynamic> json) {
     idPetugas = json['id_petugas'];
-    namaPetugas = json['nama_petugas'];
+    nama_petugas = json['nama_petugas'];
     username = json['username'];
     password = json['password'];
     telp = json['telp'];
@@ -32,7 +32,7 @@ class PetugasModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id_petugas'] = this.idPetugas;
-    data['nama_petugas'] = this.namaPetugas;
+    data['nama_petugas'] = this.nama_petugas;
     data['username'] = this.username;
     data['password'] = this.password;
     data['telp'] = this.telp;

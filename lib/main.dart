@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pengaduan_masyarakat_flutter/createMasyarakat.dart';
 import 'package:pengaduan_masyarakat_flutter/home.dart';
-import 'package:pengaduan_masyarakat_flutter/readMasyarakat.dart';
-import 'package:pengaduan_masyarakat_flutter/updateMasyarakat.dart';
+import 'package:pengaduan_masyarakat_flutter/masyarakat/createMasyarakat.dart';
+import 'package:pengaduan_masyarakat_flutter/masyarakat/readMasyarakat.dart';
+import 'package:pengaduan_masyarakat_flutter/masyarakat/updateMasyarakat.dart';
+import 'package:pengaduan_masyarakat_flutter/petugas/createPetugas.dart';
+import 'package:pengaduan_masyarakat_flutter/petugas/readPetugas.dart';
+import 'package:pengaduan_masyarakat_flutter/petugas/updatePetugas.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,10 +20,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       getPages: [
-        GetPage(name: "/", page: ()=> MyApp()),
-        GetPage(name: "/create", page: ()=> CreateMasyarakat()),
-        GetPage(name: "/read", page: ()=> ReadMasyarakat()),
-        GetPage(name: "/update", page: ()=> UpdateMasyarakat()),
+        GetPage(name: "/", page: () => MyApp()),
+        GetPage(name: "/create", page: () => CreateMasyarakat()),
+        GetPage(name: "/read", page: () => ReadMasyarakat()),
+        GetPage(name: "/update", page: () => UpdateMasyarakat()),
+        GetPage(name: "/readPetugas", page: () => ReadPetugas()),
+        GetPage(name: "/createPetugas", page: () => CreatePetugas()),
+        GetPage(name: "/updatePetugas", page: () => UpdatePetugas()),
       ],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
