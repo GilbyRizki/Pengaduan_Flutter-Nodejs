@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nodejs/createPengaduan.dart';
+import 'package:flutter_nodejs/readPengaduan.dart';
+import 'package:flutter_nodejs/updatePengaduan.dart';
 import 'package:get/get.dart';
 import 'package:flutter_nodejs/home.dart';
 import 'package:flutter_nodejs/createMasyarakat.dart';
@@ -24,9 +27,14 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/create", page: () => CreateMasyarakat()),
         GetPage(name: "/read", page: () => ReadMasyarakat()),
         GetPage(name: "/update", page: () => UpdateMasyarakat()),
+
         GetPage(name: "/readPetugas", page: () => ReadPetugas()),
         GetPage(name: "/createPetugas", page: () => CreatePetugas()),
         GetPage(name: "/updatePetugas", page: () => UpdatePetugas()),
+
+        GetPage(name: "/readPengaduan", page: () => ReadPengaduan()),
+        GetPage(name: "/createPengaduan", page: () => CreatePengaduan()),
+        GetPage(name: "/updatePengaduan", page: () => UpdatePengaduan()),
       ],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

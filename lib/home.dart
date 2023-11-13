@@ -89,6 +89,44 @@ class homeScreen extends StatelessWidget {
                     'Read Petugas',
                   )),
             ),
+            SizedBox(
+              width: 20,
+              height: 20,
+            ),
+            Center(
+              child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    foregroundColor: Colors.black,
+                    padding: const EdgeInsets.all(16.0),
+                    textStyle: const TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {
+                    Get.toNamed('/createPengaduan');
+                  },
+                  child: Text(
+                    'Create Pengaduan',
+                  )),
+            ),
+            SizedBox(
+              width: 20,
+              height: 20,
+            ),
+            Center(
+              child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    foregroundColor: Colors.black,
+                    padding: const EdgeInsets.all(16.0),
+                    textStyle: const TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {
+                    Get.toNamed('/readPengaduan');
+                  },
+                  child: Text(
+                    'Read Pengaduan',
+                  )),
+            ),
           ],
         ));
   }
