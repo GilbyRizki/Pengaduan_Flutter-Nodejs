@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as axios;
-import 'package:pengaduan_masyarakat_flutter/models/PetugasModel.dart';
+import 'package:flutter_nodejs/models/PetugasModel.dart';
 
 class PetugasController extends GetxController {
   RxInt show = RxInt(0);
@@ -22,7 +22,7 @@ class PetugasController extends GetxController {
   TextEditingController editUsernameController = TextEditingController();
   TextEditingController editPasswordController = TextEditingController();
   TextEditingController editTelpController = TextEditingController();
-  TextEditingController editLevelontroller = TextEditingController();
+  TextEditingController editLevelController = TextEditingController();
 
   @override
   void onInit() {
@@ -34,7 +34,7 @@ class PetugasController extends GetxController {
     try {
       isLoading.value == true;
       var res =
-          await axios.get(Uri.parse('http://192.168.232.42:5000/petugas'));
+          await axios.get(Uri.parse('http://192.168.40.144:5000/petugas'));
       print(res);
 
       if (res.statusCode == 200) {
@@ -51,6 +51,7 @@ class PetugasController extends GetxController {
 
   Future<bool> postData() async {
     final Map<String, dynamic> datas = {
+      "id_petugas": idPetugasController.text,
       "nama_petugas": namaPetugasController.text,
       "username": usernameController.text,
       "password": passwordController.text,
@@ -59,7 +60,7 @@ class PetugasController extends GetxController {
     };
 
     final response = await axios.post(
-        Uri.parse('http://192.168.232.42:5000/petugas'),
+        Uri.parse('http://192.168.40.144:5000/petugas'),
         headers: {"content-type": "application/json"},
         body: jsonEncode(datas));
     if (response.statusCode == 201) {
@@ -84,10 +85,10 @@ class PetugasController extends GetxController {
       "username": editUsernameController.text,
       "password": editPasswordController.text,
       "telp": editTelpController.text,
-      "level": editLevelontroller.text,
+      "level": editLevelController.text,
     };
     final response = await axios.patch(
-        Uri.parse('http://192.168.232.42:5000/petugas/${id}'),
+        Uri.parse('http://192.168.40.144:5000/petugas/${id}'),
         headers: {"content-type": "application/json"},
         body: jsonEncode(datas));
     if (response.statusCode == 201) {
@@ -106,7 +107,7 @@ class PetugasController extends GetxController {
 
   Future<bool> deleteData(id) async {
     final response = await axios.delete(
-        Uri.parse('http://192.168.232.42:5000/petugas/${id}'),
+        Uri.parse('http://192.168.40.144:5000/petugas/${id}'),
         headers: {"content-type": "application/json"});
     if (response.statusCode == 201) {
       return true;

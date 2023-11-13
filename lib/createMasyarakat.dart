@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pengaduan_masyarakat_flutter/controllers/MasyarakatController.dart';
-import 'package:pengaduan_masyarakat_flutter/home.dart';
+import 'package:flutter_nodejs/controllers/MasyarakatController.dart';
+import 'package:flutter_nodejs/home.dart';
 
 class CreateMasyarakat extends StatelessWidget {
   const CreateMasyarakat({super.key});

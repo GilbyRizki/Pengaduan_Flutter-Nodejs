@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pengaduan_masyarakat_flutter/home.dart';
-import 'package:pengaduan_masyarakat_flutter/masyarakat/createMasyarakat.dart';
-import 'package:pengaduan_masyarakat_flutter/masyarakat/readMasyarakat.dart';
-import 'package:pengaduan_masyarakat_flutter/masyarakat/updateMasyarakat.dart';
-import 'package:pengaduan_masyarakat_flutter/petugas/createPetugas.dart';
-import 'package:pengaduan_masyarakat_flutter/petugas/readPetugas.dart';
-import 'package:pengaduan_masyarakat_flutter/petugas/updatePetugas.dart';
+import 'package:flutter_nodejs/home.dart';
+import 'package:flutter_nodejs/createMasyarakat.dart';
+import 'package:flutter_nodejs/readMasyarakat.dart';
+import 'package:flutter_nodejs/updateMasyarakat.dart';
+import 'package:flutter_nodejs/createPetugas.dart';
+import 'package:flutter_nodejs/readPetugas.dart';
+import 'package:flutter_nodejs/updatePetugas.dart';
 
 void main() {
   runApp(const MyApp());
