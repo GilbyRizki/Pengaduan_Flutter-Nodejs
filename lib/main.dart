@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_nodejs/createPengaduan.dart';
-import 'package:flutter_nodejs/readPengaduan.dart';
-import 'package:flutter_nodejs/updatePengaduan.dart';
+import 'package:pengaduan_flutter/createMasyarakat.dart';
+import 'package:pengaduan_flutter/readMasyarakat.dart';
+import 'package:pengaduan_flutter/updateMasyarakat.dart';
+
+import 'package:pengaduan_flutter/createPengaduan.dart';
+import 'package:pengaduan_flutter/readPengaduan.dart';
+import 'package:pengaduan_flutter/updatePengaduan.dart';
+
+import 'package:pengaduan_flutter/createPetugas.dart';
+import 'package:pengaduan_flutter/readPetugas.dart';
+import 'package:pengaduan_flutter/updatePetugas.dart';
 import 'package:get/get.dart';
-import 'package:flutter_nodejs/home.dart';
-import 'package:flutter_nodejs/createMasyarakat.dart';
-import 'package:flutter_nodejs/readMasyarakat.dart';
-import 'package:flutter_nodejs/updateMasyarakat.dart';
-import 'package:flutter_nodejs/createPetugas.dart';
-import 'package:flutter_nodejs/readPetugas.dart';
-import 'package:flutter_nodejs/updatePetugas.dart';
+import 'package:pengaduan_flutter/home.dart';
 
 void main() {
   runApp(const MyApp());

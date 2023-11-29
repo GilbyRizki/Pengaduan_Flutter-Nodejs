@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_nodejs/controllers/MasyarakatController.dart';
-import 'package:flutter_nodejs/home.dart';
+import 'package:pengaduan_flutter/controllers/MasyarakatController.dart';
+import 'package:pengaduan_flutter/home.dart';
 
 class ReadMasyarakat extends StatelessWidget {
   const ReadMasyarakat({super.key});

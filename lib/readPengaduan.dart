@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_nodejs/controllers/PetugasController.dart';
-import 'package:flutter_nodejs/home.dart';
+import 'package:pengaduan_flutter/controllers/PengaduanController.dart';
+import 'package:pengaduan_flutter/home.dart';
 
 class ReadPengaduan extends StatelessWidget {
-  const ReadPengaduan ({super.key});
+  const ReadPengaduan({super.key});
 
   @override
   Widget build(BuildContext context) {
-    PetugasController petugasController = Get.put(PetugasController());
+    PengaduanController pengaduanController = Get.put(PengaduanController());
     return Scaffold(
       appBar: AppBar(
-        title: Text('Read Pengaduan'),
+        title: Text('Read Masyarakat'),
         backgroundColor: Colors.blue,
       ),
       body: Center(
         child: Obx(
-          () => petugasController.isLoading.value
+          () => pengaduanController.loading.value
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
               : ListView.builder(
-                  itemCount: petugasController.listpetugas.length,
+                  itemCount: pengaduanController.data.length,
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('IdPetugas : '
-                              '${petugasController.listpetugas[index].idPetugas}\nNama : ${petugasController.listpetugas[index].nama_petugas}\nUsername : ${petugasController.listpetugas[index].username}\nPassword : ${petugasController.listpetugas[index].password}\nNo Telp : ${petugasController.listpetugas[index].telp}\n Level : ${petugasController.listpetugas[index].level}'),
+                          Text('NIK : '
+                              '${pengaduanController.data[index].nik}\nNama : ${pengaduanController.data[index].isiLaporan}\nUsername : ${pengaduanController.data[index].status}\n'),
                           Row(
                             children: [
                               TextButton(
@@ -39,18 +39,15 @@ class ReadPengaduan extends StatelessWidget {
                                     textStyle: const TextStyle(fontSize: 20),
                                   ),
                                   onPressed: () {
-                                    Get.toNamed('/updatePetugas',
+                                    Get.toNamed("/updatePengaduan",
                                         arguments: {"index": index});
-                                    petugasController.getId(index);
                                   },
-                                  child: Text(
-                                    'Edit',
-                                  )),
+                                  child: const Text("Edit")),
                               SizedBox(
                                 width: 50,
                                 height: 10,
                               ),
-                              TextButton(
+                              ElevatedButton(
                                   style: TextButton.styleFrom(
                                     backgroundColor: Colors.red,
                                     foregroundColor: Colors.black,
@@ -58,17 +55,12 @@ class ReadPengaduan extends StatelessWidget {
                                     textStyle: const TextStyle(fontSize: 20),
                                   ),
                                   onPressed: () {
-                                    petugasController.deleteData(
-                                        petugasController
-                                            .listpetugas[index].idPetugas);
-                                    // ignore: invalid_use_of_protected_member
-                                    petugasController.listpetugas.value.clear();
-                                    petugasController.getData();
+                                    pengaduanController.destroyData(
+                                        pengaduanController
+                                            .data[index].idPengaduan);
                                     Get.to(homeScreen());
                                   },
-                                  child: Text(
-                                    'Delete',
-                                  )),
+                                  child: const Text("Hapus")),
                             ],
                           ),
                         ],

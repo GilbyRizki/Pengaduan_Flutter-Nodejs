@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_nodejs/controllers/PetugasController.dart';
-import 'package:flutter_nodejs/home.dart';
+import 'package:pengaduan_flutter/controllers/PetugasController.dart';
+import 'package:pengaduan_flutter/home.dart';
 
 class ReadPetugas extends StatelessWidget {
   const ReadPetugas({super.key});

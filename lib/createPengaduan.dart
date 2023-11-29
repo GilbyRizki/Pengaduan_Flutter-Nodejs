@@ -1,63 +1,170 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_nodejs/controllers/PetugasController.dart';
-import 'package:flutter_nodejs/home.dart';
+import 'package:pengaduan_flutter/controllers/MasyarakatController.dart';
+import 'package:pengaduan_flutter/controllers/PengaduanController.dart';
+import 'package:intl/intl.dart';
+import 'package:pengaduan_flutter/home.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
-class CreatePengaduan extends StatelessWidget {
-  const CreatePengaduan({super.key});
+class CreatePengaduan extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _CreatePengaduan();
+  }
+}
+
+class _CreatePengaduan extends State<CreatePengaduan> {
+  TextEditingController dateinput = TextEditingController();
+
+  @override
+  void initState() {
+    dateinput.text = ""; //set the initial value of text field
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    PetugasController petugasController = Get.put(PetugasController());
+    Map data = {};
+    var hasil;
+    PengaduanController pengaduanController = Get.put(PengaduanController());
+    MasyarakatController masyarakatController = Get.put(MasyarakatController());
+    print(masyarakatController.listmasyarakat);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Pengaduan'),
-        backgroundColor: Colors.blue,
-      ),
-      body: Column(
-        children: [
-          TextField(
-            controller: petugasController.idPetugasController,
-            decoration: InputDecoration(labelText: 'Id Petugas'),
-          ),
-          TextField(
-            controller: petugasController.namaPetugasController,
-            decoration: InputDecoration(labelText: 'Input Nama'),
-          ),
-          TextField(
-            controller: petugasController.usernameController,
-            decoration: InputDecoration(labelText: 'Input Username'),
-          ),
-          TextField(
-            controller: petugasController.passwordController,
-            decoration: InputDecoration(labelText: 'Input Password'),
-          ),
-          TextField(
-            controller: petugasController.telpController,
-            decoration: InputDecoration(labelText: 'Input No Telp'),
-          ),
-          TextField(
-            controller: petugasController.levelController,
-            decoration: InputDecoration(labelText: 'Input Level'),
-          ),
-          SizedBox(
-            width: 20,
-            height: 20,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Get.to(homeScreen());
-              petugasController.postData();
-            },
-            child: Text('Submit'),
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.blue,
-              foregroundColor: Colors.black,
-              padding: const EdgeInsets.all(16.0),
-              textStyle: const TextStyle(fontSize: 20),
+          iconTheme: const IconThemeData(color: Colors.white),
+          backgroundColor: Colors.blue,
+          title: const Text("Pengaduan Masyarakat",
+              style: TextStyle(color: Colors.white))),
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            TextField(
+              decoration: const InputDecoration(
+                label: Text("Isi Laporan"),
+              ),
+              onChanged: (value) => data["isi_laporan"] = value,
             ),
-          )
-        ],
+            TextField(
+              decoration: const InputDecoration(
+                label: Text("Status"),
+              ),
+              onChanged: (value) => data["status"] = value,
+            ),
+            TextField(
+              controller: dateinput,
+              decoration: const InputDecoration(
+                  icon: Icon(Icons.calendar_today), labelText: "Enter Date"),
+              readOnly: true,
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2101));
+
+                if (pickedDate != null) {
+                  String formattedDate =
+                      DateFormat('yyyy-MM-dd').format(pickedDate);
+
+                  data["tgl_pengaduan"] = formattedDate;
+                  dateinput.text = formattedDate;
+                } else {
+                  print("Date is not selected");
+                }
+              },
+              onChanged: (value) => data["tgl_pengaduan"] = dateinput.text,
+            ),
+            Obx(() =>
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton2<String>(
+                      isExpanded: true,
+                      hint: const Row(
+                        children: [
+                          Expanded(
+                            child: Text('Pilih Nik',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                      buttonStyleData: ButtonStyleData(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: Colors.black26),
+                          color: Colors.blue,
+                        ),
+                        elevation: 2,
+                      ),
+                      dropdownStyleData: DropdownStyleData(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          color: Colors.blue,
+                        ),
+                        scrollbarTheme: ScrollbarThemeData(
+                          radius: const Radius.circular(40),
+                          thickness: MaterialStateProperty.all(6),
+                          thumbVisibility: MaterialStateProperty.all(true),
+                        ),
+                      ),
+                      items: masyarakatController.listmasyarakat.map((masyarakat) => DropdownMenuItem(
+                        value: masyarakat.nik,
+                        child: Text(masyarakat.nik.toString(),style: const TextStyle(fontSize: 14,color: Colors.white)),
+                      )).toList(),
+                      value: data["nik"],
+                      onChanged: (String? value) => data["nik"] = value!,
+                    ),
+                  ),
+              ),
+            const SizedBox(height: 20),
+            Obx(
+              () => !pengaduanController.web.value
+                  ? ElevatedButton(
+                      onPressed: () {
+                        pengaduanController.pickImage();
+                      },
+                      child: const Text("File Image"),
+                    )
+                  : Column(
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              pengaduanController.pickImage();
+                            },
+                            child: Image.memory(
+                                pengaduanController.fileWeb["file"],
+                                width: 200)),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () {
+                            pengaduanController.pickImage();
+                          },
+                          child: const Text("File Image"),
+                        )
+                      ],
+                    ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                hasil = await pengaduanController.createData(data);
+                print(hasil);
+                if (hasil != "success") {
+                  Get.snackbar("Error", hasil.toString());
+                  return;
+                }
+                ;
+                Get.to(homeScreen());
+              },
+              child: const Text("Create"),
+            ),
+          ],
+        ),
       ),
     );
   }

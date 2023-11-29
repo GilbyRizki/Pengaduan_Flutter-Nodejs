@@ -1,51 +1,88 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_nodejs/controllers/MasyarakatController.dart';
-import 'package:flutter_nodejs/home.dart';
+import 'package:pengaduan_flutter/controllers/PengaduanController.dart';
+import 'package:pengaduan_flutter/controllers/MasyarakatController.dart';
+import 'package:pengaduan_flutter/home.dart';
 
 class UpdatePengaduan extends StatelessWidget {
   const UpdatePengaduan({super.key});
 
   @override
   Widget build(BuildContext context) {
+    int index = Get.arguments["index"];
+    PengaduanController pengaduanController = Get.put(PengaduanController());
     MasyarakatController masyarakatController = Get.put(MasyarakatController());
-    final index = masyarakatController.id.value;
-    // ignore: invalid_use_of_protected_member
-    final nik = masyarakatController.listmasyarakat.value[index].nik;
+    print(masyarakatController.listmasyarakat);
+    var pengaduan = pengaduanController.data[index];
+    Map data = {
+      "isi_laporan" : pengaduan.isiLaporan,
+      "tgl_pengaduan" : pengaduan.tglPengaduan,
+      "status" : pengaduan.status,
+      "nik" : pengaduan.nik
+    };
+    var hasil;
+    var url = 'http://localhost:5000/images/${pengaduan.foto}';
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Masyarakat'),
-        backgroundColor: Colors.blue,
-      ),
-      body: Column(
-        children: [
-          TextField(
-            controller: masyarakatController.editNamaController,
-            decoration: InputDecoration(labelText: 'Input Nama'),
+          iconTheme: const IconThemeData(color: Colors.white),
+          backgroundColor: Colors.blue,
+          title:  const Text("Pengaduan Masyarakat",style: TextStyle(color: Colors.white))),
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        child:SingleChildScrollView(
+          child: Column(
+            children: [
+              TextField(
+                controller: TextEditingController(text: data["isi_laporan"]),
+                decoration:const InputDecoration(
+                  label:Text("Isi Laporan"),
+                ),
+                onChanged: (value) => data["isi_laporan"] = value,
+              ),
+              TextField(
+                decoration:const InputDecoration(
+                  label:Text("Status"),
+                ),
+                controller: TextEditingController(text: data["status"]),
+                onChanged: (value) => data["status"] = value ,
+              ),
+              const SizedBox(height: 20),
+              Obx(() => pengaduanController.fileWeb["file"] == ""  ?
+                Column(
+                  children: [
+                    Image.network(url,width: 200),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        pengaduanController.pickImage();
+                      },
+                      child:const Text("Update Image"),
+                    ),
+                  ],
+                ) :
+                GestureDetector(
+                    onTap: () {
+                      pengaduanController.pickImage();
+                    },
+                    child: Image.memory(pengaduanController.fileWeb["file"]!,width: 200)
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () async {
+                  hasil = await pengaduanController.updateData(data,pengaduan.idPengaduan);
+                  if(hasil != "success") {
+                    Get.snackbar("Error",hasil.toString());
+                    return;
+                  };
+                  Get.to(homeScreen());
+                },
+                child:const Text("update"),
+              ),
+              const SizedBox(height: 100),
+            ],
           ),
-          TextField(
-            controller: masyarakatController.editUsernameController,
-            decoration: InputDecoration(labelText: 'Input Username'),
-          ),
-          TextField(
-            controller: masyarakatController.editPasswordController,
-            decoration: InputDecoration(labelText: 'Input Password'),
-          ),
-          TextField(
-            controller: masyarakatController.editTelpController,
-            decoration: InputDecoration(labelText: 'Input No Telp'),
-          ),
-          SizedBox(
-            width: 20,
-            height: 20,
-          ),
-          ElevatedButton(
-              onPressed: () {
-                Get.to(homeScreen());
-                masyarakatController.updateData(nik);
-              },
-              child: Text('Update'))
-        ],
+        ),
       ),
     );
   }

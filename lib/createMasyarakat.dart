@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_nodejs/controllers/MasyarakatController.dart';
-import 'package:flutter_nodejs/home.dart';
+import 'package:pengaduan_flutter/controllers/MasyarakatController.dart';
+import 'package:pengaduan_flutter/home.dart';
 
 class CreateMasyarakat extends StatelessWidget {
   const CreateMasyarakat({super.key});
@@ -41,16 +41,18 @@ class CreateMasyarakat extends StatelessWidget {
             height: 20,
           ),
           ElevatedButton(
-              onPressed: () {
-                Get.to(homeScreen());
-                masyarakatController.postData();
-              },
-              child: Text('Submit'),style: TextButton.styleFrom(
-                                    backgroundColor: Colors.blue,
-                                    foregroundColor: Colors.black,
-                                    padding: const EdgeInsets.all(16.0),
-                                    textStyle: const TextStyle(fontSize: 20),
-                                  ),)
+            onPressed: () {
+              Get.to(homeScreen());
+              masyarakatController.postData();
+            },
+            child: Text('Submit'),
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.black,
+              padding: const EdgeInsets.all(16.0),
+              textStyle: const TextStyle(fontSize: 20),
+            ),
+          )
         ],
       ),
     );
